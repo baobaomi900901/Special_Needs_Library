@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="box box1"></div>
+    <div class="box box2"></div>
+    <script>
+      function calculateOverlayColor(
+        inputColor,
+        inputColor2,
+        overlayAlpha = 0.2
+      ) {
+        // 将输入的色值转换为 RGB 或 RGBA 格式
+        const rgba = inputColor.match(/\d+/g);
+        const red = Number(rgba[0]);
+        const green = Number(rgba[1]);
+        const blue = Number(rgba[2]);
+        const alpha = rgba[3] ? Number(rgba[3]) : 1;
+
+        inputColor2 = inputColor2 || "rgb(255, 255, 255)";
+
+        const rgba2 = inputColor2.match(/\d+/g);
+        const red2 = Number(rgba2[0]);
+        const green2 = Number(rgba2[1]);
+        const blue2 = Number(rgba2[2]);
+        const alpha2 = rgba2[3] ? Number(rgba2[3]) : 1;
+
+        // 计算新的色值
+        const newRed = red * (1 - overlayAlpha) + red2 * overlayAlpha;
+        const newGreen = green * (1 - overlayAlpha) + green2 * overlayAlpha;
+        const newBlue = blue * (1 - overlayAlpha) + blue2 * overlayAlpha;
+        const newAlpha = alpha * (1 - overlayAlpha) + overlayAlpha;
+
+        // 返回新的色值
+        return `rgba(${Math.round(newRed)}, ${Math.round(
+          newGreen
+        )}, ${Math.round(newBlue)}, ${newAlpha})`;
+      }
+
+      // 示例用法
+      const inputColor = "rgb(255, 0, 0)";
+      const inputColor2 = "rgb(0, 0, 0)";
+      const overlaidColor = calculateOverlayColor(inputColor, inputColor2, 0.2);
+      console.log(overlaidColor);
+
+      const box1 = document.querySelector(".box1");
+      const box2 = document.querySelector(".box2");
+
+      box1.style.backgroundColor = inputColor;
+      box2.style.backgroundColor = overlaidColor;
+    </script>
+  </body>
+</html>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    gap: 16px;
+  }
+  .box {
+    width: 100px;
+    height: 100px;
+  }
+</style>

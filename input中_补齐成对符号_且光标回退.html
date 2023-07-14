@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>自动补齐右括号</title>
+  </head>
+  <body>
+    <input type="text" id="myInput" />
+    <script>
+      const myInput = document.getElementById("myInput");
+      myInput.value = "ABCD";
+
+      // 监听输入框的按键事件
+      myInput.addEventListener("keydown", function (e) {
+        if (event.shiftKey && event.keyCode === 57) {
+          var cursorPosition = myInput.selectionStart; // 获取光标位置
+          var currentValue = myInput.value; // 获取当前输入框的值
+          var newValue =
+            currentValue.slice(0, cursorPosition) +
+            ")" +
+            currentValue.slice(cursorPosition);
+          // 更新输入框的值
+          myInput.value = newValue;
+          // 更新光标位置
+          myInput.setSelectionRange(cursorPosition, cursorPosition);
+        }
+      });
+    </script>
+  </body>
+</html>

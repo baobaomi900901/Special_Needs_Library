@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>流程块一键整理v2</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .boxs {
+        display: grid;
+        grid-template-columns: repeat(5, 100px);
+        grid-template-rows: repeat(5, 100px);
+      }
+      .box {
+        display: grid;
+        background: rgba(255, 0, 0, 0.3);
+      }
+      .block {
+        width: 64px;
+        height: 64px;
+        background-color: #fff;
+        text-align: center;
+        line-height: 64px;
+      }
+      .point {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+        background: rgba(255, 0, 0, 0.3);
+        /* 网格中右对齐 */
+        justify-self: end;
+        text-align: center;
+        line-height: 36px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="boxs">
+      <div class="box">
+        <div class="block">A</div>
+        <div class="point">1-1</div>
+      </div>
+      <div class="box">
+        <div class="block"></div>
+        <div class="point">1-2</div>
+      </div>
+      <div class="box">
+        <div class="block"></div>
+        <div class="point">1-3</div>
+      </div>
+      <div class="box">
+        <div class="block"></div>
+        <div class="point">1-4</div>
+      </div>
+      <div class="box">
+        <div class="block"></div>
+        <div class="point">1-5</div>
+      </div>
+      <div class="box">
+        <div class="block">B</div>
+        <div class="point">2-1</div>
+      </div>
+      <div class="box">
+        <div class="block">C</div>
+        <div class="point">2-2</div>
+      </div>
+      <div class="box">
+        <div class="block">BBM</div>
+        <div class="point">2-3</div>
+      </div>
+      <div class="box">
+        <div class="block"></div>
+        <div class="point">2-4</div>
+      </div>
+      <div class="box">
+        <div class="block"></div>
+        <div class="point">2-5</div>
+      </div>
+      <div class="box">
+        <div class="block">D</div>
+        <div class="point">3-1</div>
+      </div>
+      <div class="box">
+        <div class="block">E</div>
+        <div class="point">3-2</div>
+      </div>
+      <div class="box">
+        <div class="block">F</div>
+        <div class="point">3-3</div>
+      </div>
+      <div class="box">
+        <div class="block">G</div>
+        <div class="point">3-4</div>
+      </div>
+      <div class="box">
+        <div class="block">H</div>
+        <div class="point">3-5</div>
+      </div>
+      <div class="box">
+        <div class="block">I</div>
+        <div class="point">4-1</div>
+      </div>
+      <div class="box">
+        <div class="block">J</div>
+        <div class="point">4-2</div>
+      </div>
+      <div class="box">
+        <div class="block">K</div>
+        <div class="point">4-3</div>
+      </div>
+      <div class="box">
+        <div class="block">L</div>
+        <div class="point">4-4</div>
+      </div>
+      <div class="box">
+        <div class="block">M</div>
+        <div class="point">4-5</div>
+      </div>
+      <div class="box">
+        <div class="block">N</div>
+        <div class="point">5-1</div>
+      </div>
+      <div class="box">
+        <div class="block">O</div>
+        <div class="point">5-2</div>
+      </div>
+      <div class="box">
+        <div class="block">P</div>
+        <div class="point">5-3</div>
+      </div>
+      <div class="box">
+        <div class="block">Q</div>
+        <div class="point">5-4</div>
+      </div>
+      <div class="box">
+        <div class="block">R</div>
+        <div class="point">5-5</div>
+      </div>
+    </div>
+    <script>
+      // 模拟层级
+      let a = {
+        name: "a",
+        level: [1],
+        children: ["b", "c", "d", "bbm", "i", "n"],
+      };
+      let b = { name: "b", level: [2], children: ["d", "e"] };
+      let c = { name: "c", level: [2], children: ["e"] };
+      let bbm = {
+        name: "bbm",
+        level: [2],
+        children: [
+          "d",
+          "e",
+          "f",
+          "g",
+          "h",
+          "i",
+          "j",
+          "k",
+          "l",
+          "m",
+          "n",
+          "o",
+          "p",
+          "q",
+          "r",
+        ],
+      };
+      let d = { name: "d", level: [2, 3], children: ["i"] };
+      let e = { name: "e", level: [3], children: ["c"] };
+      let f = { name: "f", level: [3], children: ["k"] };
+      let g = { name: "g", level: [3], children: ["l"] };
+      let h = { name: "h", level: [3], children: ["m"] };
+      let i = { name: "i", level: [3, 4], children: ["n"] };
+      let j = { name: "j", level: [3, 4], children: ["o"] };
+      let k = { name: "k", level: [3, 4], children: ["p"] };
+      let l = { name: "l", level: [3, 4], children: ["q"] };
+      let m = { name: "m", level: [3, 4], children: ["r"] };
+
+      let n = { name: "n", level: [3, 4, 5], children: [] };
+      let o = { name: "o", level: [3, 4, 5], children: [] };
+      let p = { name: "p", level: [3, 4, 5], children: [] };
+      let q = { name: "q", level: [3, 4, 5], children: [] };
+      let r = { name: "r", level: [3, 4, 5], children: [] };
+
+      // 流程数据
+      let flowData = [
+        a,
+        b,
+        c,
+        bbm,
+        d,
+        e,
+        f,
+        g,
+        h,
+        i,
+        j,
+        k,
+        l,
+        m,
+        n,
+        o,
+        p,
+        q,
+        r,
+      ];
+      // 线数据
+      let lineData = [];
+      // 数据中最大层级
+      let FD_max_Row = 0;
+      // 顺序
+      let order = {};
+
+      // 1. 去数组中的最大数
+      function getMax(arr) {
+        let max = 0;
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] > max) {
+            max = arr[i];
+          }
+        }
+        return max;
+      }
+
+      // 遍历 flowData 中的 level, 给每个对象添加一个 row
+      for (let i = 0; i < flowData.length; i++) {
+        flowData[i].row = getMax(flowData[i].level);
+      }
+
+      // 遍历 flowData 中的 row
+      for (let i = 0; i < flowData.length; i++) {
+        if (flowData[i].row > FD_max_Row) {
+          FD_max_Row = flowData[i].row;
+        }
+      }
+
+      // 给 order 中添加对象
+      for (let i = 1; i <= FD_max_Row; i++) {
+        order[i] = flowData.filter((item) => {
+          return item.row == i;
+        });
+      }
+
+      // 给 order 中的对象分配一个 col
+      for (let i = 1; i <= Object.keys(order).length; i++) {
+        for (let j = 0; j < Object.keys(order[i]).length; j++) {
+          order[i][j].col = j + 1;
+        }
+      }
+
+      // drawLine
+      function drawLine(obj) {
+        // console.log("父 row :>>", obj.row, "父 col :>>", obj.col);
+        // console.log("子节点 :>>", obj.children);
+        let children = {};
+        for (let i = 0; i < obj.children.length; i++) {
+          // 添加线的名称
+          let lineKey = `${obj.name + "_" + obj.children[i]}`;
+          let lineName = {
+            name: lineKey,
+            path: {
+              start: [],
+              move: [],
+              end: [],
+            },
+          };
+          //   console.log("线名称 :>>", lineKey);
+
+          for (let j = 0; j < flowData.length; j++) {
+            if (flowData[j].name == obj.children[i]) {
+              // 判断是否同列
+              let children = flowData[j];
+              //   console.log(
+              //     "obj :>> ",
+              //     obj.row,
+              //     obj.col,
+              //     "|",
+              //     children.row,
+              //     children.col
+              //   );
+
+              // 判断是否同列
+              if (obj.col == children.col) {
+                // 判断是否相邻
+                if (children.row - obj.row == 1) {
+                  lineName.path.start.push("down");
+                  lineName.path.end.push("top");
+                  console.log("同列相邻", lineKey, lineName.path);
+                } else {
+                  lineName.path.start.push("right");
+                  lineName.path.end.push("right");
+                  for (let i = obj.row; i < children.row; i++) {
+                    let move = i + "-" + children.col;
+                    lineName.path.move.push(move);
+                  }
+                  console.log("同列不相邻", lineKey, lineName.path);
+                }
+              } else {
+                if (obj.col - children.col > 0) {
+                  lineName.path.start.push("down");
+                  lineName.path.end.push("right");
+                  for (let i = obj.col; i > children.col; i--) {
+                    // console.log("i :>>", i - 1);
+                    let move = obj.row + "-" + (i - 1);
+                    lineName.path.move.push(move);
+                  }
+                  for (let i = obj.row; i < children.row; i++) {
+                    let move = i + "-" + children.col;
+                    // console.log("move :>>", move);
+                    lineName.path.move.push(move);
+                  }
+                  console.log("不同列-在左侧", lineKey, lineName.path);
+                } else {
+                  lineName.path.start.push("down");
+                  lineName.path.end.push("left");
+                  for (let i = obj.col; i < children.col; i++) {
+                    let move = obj.row + "-" + i;
+                    lineName.path.move.push(move);
+                  }
+                  for (let i = obj.row + 1; i < children.row; i++) {
+                    let move = i + "-" + (children.row - 1);
+                    lineName.path.move.push(move);
+                  }
+                  console.log("不同列-在右侧", lineKey, lineName.path);
+                }
+              }
+            }
+          }
+          // 将 lineName.path.move 去重
+          lineName.path.move = [...new Set(lineName.path.move)]; // 电风扇地方
+
+          lineData.push(lineName);
+        }
+      }
+      //   drawLine(flowData[3]); //bbm
+      drawLine(flowData[3]);
+      console.log(lineData);
+    </script>
+  </body>
+</html>

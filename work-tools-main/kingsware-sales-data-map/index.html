@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Noto Sans"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <!-- <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://localhost:44317/css/loading.css"
+    /> -->
+    <!-- <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://localhost:44317/css/visualization.css"
+    /> -->
+    <!-- <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://localhost:44317/css/timeline.css"
+    /> -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/bullet.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <!-- <script src="/js/highcharts/map.js"></script> -->
+    <script src="https://code.highcharts.com/modules/annotations.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+    <!-- <script src="https://localhost:44317/js/loading.js"></script> -->
+    <!-- <script src="https://localhost:44317/js/interactivity.js"></script> -->
+
+    <script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/au/au-all.js"></script>
+    <!-- <script src="https://code.highcharts.com/mapdata/countries/au/uk-all.js"></script> -->
+    <script src="https://code.highcharts.com/mapdata/countries/ca/ca-all.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/cn/cn-all.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/nz/nz-all.js"></script>
+
+    <script src="https://code.highcharts.com/mapdata/countries/us/us-ca-all.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/us/us-co-all.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/us/custom/us-small.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/cn/custom/cn-all-sar-taiwan.js"></script>
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #eee;
+      }
+      .container {
+        display: flex;
+      }
+
+      .edit-area {
+        width: 100%;
+
+        padding: 24px 24px;
+      }
+      .edit-area h3 {
+        margin-bottom: 12px;
+      }
+      .edit-area #submit-btn {
+        background: #0d23f5;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin-top: 12px;
+      }
+      .item {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        /* background: red; */
+      }
+
+      .item label {
+        margin-bottom: 4px;
+      }
+
+      .item textarea {
+        width: 100%;
+        max-width: 480px;
+        height: 120px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 12px 12px;
+
+        font-size: 16px;
+      }
+      .item input {
+        width: 100%;
+        max-width: 480px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 12px 12px;
+
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="BusinessConcentration"></div>
+      <div class="edit-area">
+        <h3>编辑地图数据</h3>
+        <div class="item">
+          <label for="title-input">标题:</label>
+          <input class="title" name="" id="title-input"></input>
+        </div>
+        <div class="item">
+          <label for="tuli-input">图例:</label>
+          <input class="title" name="" id="tuli-input"></input>
+        </div>
+        <div class="item">
+          <label for="data-input">输入数据:</label>
+          <textarea class="data" name="" id="data-input"></textarea>
+        </div>
+        <button id="submit-btn">更新地图</button>
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>

@@ -462,32 +462,97 @@ const roleAstrict = [
     }
 ]
 
-// 查询部门权限的方法, 传入部门ID, 返回部门权限
-function getDeptPermission(dept_id) {
+// 创建部门
+const createDept = (dept_name, parent_dept_id) => {
+    // 1. 创建部门
+    const dept_id = 200000 + departments.length + 1
+    const dept_level = departments.find(item => item.dept_id == parent_dept_id).dept_level + 1 // 父级部门的 level + 1
+    const dept = {
+        dept_id,
+        dept_name,
+        dept_level,
+        parent_dept_id,
+    }
+    departments.push(dept)
+    let parent_id_array = []
+    let bbm = parent_dept_id
+    for (let i = 0; i < dept_level; i++) {
+        console.log(bbm);
+        let a = departments.find(item => item.dept_id == bbm)
+        bbm = a
+        console.log(a);
+    }
+
+}
+createDept('格力项目组', 200002)
+console.log('departments :>> ', departments, departmentParents);
+
+// 查询部门的父级部门
+const getDeptParents = (dept_id) => {
+    // 1. 校验, departments 是否有 dept_id
+    const dept = departments.find(item => item.dept_id === dept_id)
+    const deptID = dept.dept_id
+    const deptName = dept.dept_name
+    const deptIDArray = [deptID]
+
+    // 2. 查所有 dept_id 的父级部门
+    // 在 departmentParents 遍历 dept_id === deptID 的所有 parent_id
+    const parents = []
+    departmentParents.find(item => {
+        if (item.dept_id === deptID) {
+            parents.push(item.parent_id)
+        }
+    })
+    // 3. 通过 parents 去遍历 departments 中对应的 dept_id 的部门
+    const deptParents = []
+    parents.forEach(item => {
+        departments.find(dept => {
+            if (dept.dept_id === item) {
+                deptParents.push(dept.dept_name)
+            }
+        })
+    })
+    console.log(deptName, '的父级部门是', deptParents);
+}
+// getDeptParents(200003)
+
+
+// 关闭部门权限
+const closeDeptPermission = (dept_id) => {
+}
+
+// 查询部门属性
+const getPermission = (dept_id) => {
     // 校验, departments 是否有 dept_id
     const dept = departments.find(item => item.dept_id === dept_id)
     const deptID = dept.dept_id
     const deptIDArray = [deptID]
 
     // 1. 查所有 dept_id 的父级部门
-    // 在 departmentParents 中 查询 deptID 的所有父级id, 并添加进 deptIDArray
-    const deptParent = departmentParents.find(item => {
-        // 如果 item.dept_id === deptID, 则将 item.parent_id 添加进 deptIDArray
-        if (item.dept_id === deptID) deptIDArray.push(item.parent_id)
-
+    // 在 roleRelation 遍历 type[0] === 'dept_id' && type[1] === deptID 的所有 role_id
+    const roleRelationDept = []
+    roleRelation.find(item => {
+        if (item.type[0] === 'dept_id' && item.type[1] === deptID) {
+            roleRelationDept.push(item.role_id)
+        }
     })
-    // console.log(deptIDArray);
 
-    // 遍历 deptIDArray, 在 roleRelation 中查找对应的权限
-    //  声明一个叫 deptRoleIDArray 的 map 类型, 存放权限 id 的数组
-    let deptRoleIDArray = []
-    console.log(deptRoleIDArray);
-
-    deptIDArray.forEach(item => {
-        const deptRoleID = roleRelation.find(role => {
-            if (role.type[1] === item) deptRoleIDArray.push(role.role_id)
+    // 2.通过roleRelationDept 去遍历 roles 中对应的 role_id 的权限
+    const rolePermission = []
+    roleRelationDept.forEach(item => {
+        roles.find(role => {
+            if (role.role_id === item) {
+                rolePermission.push(role.permission)
+            }
         })
     })
-    deptRoleIDArray = [...new Set(deptRoleIDArray)] // 去重
+    // 解开 rolePermission
+    const permission = []
+    rolePermission.forEach(item => {
+        item.forEach(item2 => {
+            permission.push(item2)
+        })
+    })
+    console.log('获取权限集合 :>>', permission);
 }
-getDeptPermission(200003)
+// getPermission(200003)
